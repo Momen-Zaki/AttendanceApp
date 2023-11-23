@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hE2a10lzgWTAOHqR4Rl2emMh7H7lLmaox2uhLjgotEL01hO4Oxgmnl7Qi54WJomRL7GGiqPJHAJ80148D2Blmg==",
+  "dgSpecHash": "5tVHrrqHpw2vZHODReSDH1Iz4cxgXVlRuVcuqyVLFhy41/Y0yFoEV87iFXGMhU662Gi5DhTrcDz9fPa7GDWbwQ==",
   "success": true,
-  "projectFilePath": "E:\\Other\\Dev\\.Net API\\AttendanceApp\\AttendanceApp.WebApi\\AttendanceApp.WebApi.csproj",
+  "projectFilePath": "C:\\Users\\mo2me\\Source\\Repos\\AttendanceApp\\AttendanceApp.WebApi\\AttendanceApp.WebApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mo2me\\.nuget\\packages\\bcrypt.net-core\\1.6.0\\bcrypt.net-core.1.6.0.nupkg.sha512",
     "C:\\Users\\mo2me\\.nuget\\packages\\fastendpoints\\5.19.2\\fastendpoints.5.19.2.nupkg.sha512",

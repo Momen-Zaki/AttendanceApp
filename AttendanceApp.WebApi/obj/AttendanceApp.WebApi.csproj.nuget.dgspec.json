@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Other\\Dev\\.Net API\\AttendanceApp\\AttendanceApp.WebApi\\AttendanceApp.WebApi.csproj": {}
+    "C:\\Users\\mo2me\\Source\\Repos\\AttendanceApp\\AttendanceApp.WebApi\\AttendanceApp.WebApi.csproj": {}
   },
   "projects": {
-    "E:\\Other\\Dev\\.Net API\\AttendanceApp\\AttendanceApp.WebApi\\AttendanceApp.WebApi.csproj": {
+    "C:\\Users\\mo2me\\Source\\Repos\\AttendanceApp\\AttendanceApp.WebApi\\AttendanceApp.WebApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Other\\Dev\\.Net API\\AttendanceApp\\AttendanceApp.WebApi\\AttendanceApp.WebApi.csproj",
+        "projectUniqueName": "C:\\Users\\mo2me\\Source\\Repos\\AttendanceApp\\AttendanceApp.WebApi\\AttendanceApp.WebApi.csproj",
         "projectName": "AttendanceApp.WebApi",
-        "projectPath": "E:\\Other\\Dev\\.Net API\\AttendanceApp\\AttendanceApp.WebApi\\AttendanceApp.WebApi.csproj",
+        "projectPath": "C:\\Users\\mo2me\\Source\\Repos\\AttendanceApp\\AttendanceApp.WebApi\\AttendanceApp.WebApi.csproj",
         "packagesPath": "C:\\Users\\mo2me\\.nuget\\packages\\",
-        "outputPath": "E:\\Other\\Dev\\.Net API\\AttendanceApp\\AttendanceApp.WebApi\\obj\\",
+        "outputPath": "C:\\Users\\mo2me\\Source\\Repos\\AttendanceApp\\AttendanceApp.WebApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
