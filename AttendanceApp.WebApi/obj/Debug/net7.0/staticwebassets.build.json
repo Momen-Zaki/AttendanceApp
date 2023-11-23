@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "XSYuzbBpxv9bWydAbptaJHqZjJ0gJ5ugNLZrDRAmXf4=",
+  "Source": "AttendanceApp.WebApi",
+  "BasePath": "_content/AttendanceApp.WebApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
