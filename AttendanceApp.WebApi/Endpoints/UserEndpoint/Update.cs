@@ -20,7 +20,7 @@ namespace AttendanceApp.WebApi.Endpoints.UserEndpoint
         public override void Configure()
         {
             Put("users/{Id:Guid}");
-            AllowAnonymous();
+            Roles("Admin");
             Summary(s =>
             {
                 s.Summary = "Update a User by Id";

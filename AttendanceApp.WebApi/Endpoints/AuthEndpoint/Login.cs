@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -55,17 +56,27 @@ namespace AttendanceApp.WebApi.Endpoints.AuthEndpoint
                     privileges: u =>
                     {
                         u.Roles.Add("Admin");
-                        u.Claims.Add(new("UserName", req.Username));
+                        u.Claims.Add(
+                            new Claim("UserName", user.UserName),
+                            new Claim("Role", user.Role),
+                            new Claim("Id", user.Id.ToString())
+                            );
                     });
             }
-
-            token = JWTBearer.CreateToken(
-                signingKey: configuration["JwtBearerDefaults:SecretKey"],
-                expireAt: DateTime.UtcNow.AddDays(1),
-                privileges: u =>
-                {
-                    u.Claims.Add(new("UserName", req.Username));
-                });
+            else
+            {
+                token = JWTBearer.CreateToken(
+                    signingKey: configuration["JwtBearerDefaults:SecretKey"],
+                    expireAt: DateTime.UtcNow.AddDays(1),
+                    privileges: u =>
+                    {
+                        u.Claims.Add(
+                            new Claim("UserName", user.UserName),
+                            new Claim("Role", user.Role),
+                            new Claim("Id", user.Id.ToString())
+                            );
+                    });
+            }
 
             Response.UserName = req.Username;
             Response.Token = token;

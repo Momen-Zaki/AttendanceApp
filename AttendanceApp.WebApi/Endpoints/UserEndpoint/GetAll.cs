@@ -20,7 +20,7 @@ namespace AttendanceApp.WebApi.Endpoints.UserEndpoint
         public override void Configure()
         {
             Get("users");
-            AllowAnonymous();
+            Roles("Admin");
         }
 
         public override async Task HandleAsync(CancellationToken ct)

@@ -22,7 +22,6 @@ namespace AttendanceApp.WebApi.Endpoints.UserEndpoint
         public override void Configure()
         {
             Post("/users/create");
-            //AllowAnonymous();
             Roles("Admin");
         }
 

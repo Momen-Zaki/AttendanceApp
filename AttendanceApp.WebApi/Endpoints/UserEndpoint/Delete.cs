@@ -21,7 +21,7 @@ namespace AttendanceApp.WebApi.Endpoints.UserEndpoint
         public override void Configure()
         {
             Delete("users/{Id:Guid}");
-            AllowAnonymous();
+            Roles("Admin");
             Summary(s =>
             {
                 s.Summary = "Get User by Id";

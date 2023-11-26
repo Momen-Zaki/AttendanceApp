@@ -22,7 +22,7 @@ namespace AttendanceApp.WebApi.Endpoints.UserEndpoint
         public override void Configure()
         {
             Get("users/{Id:Guid}/withrecords");
-            AllowAnonymous();
+            Roles("Admin");
             Description(x => x.WithName("GetUserWithRecordsById"));
             Summary(s =>
             {
