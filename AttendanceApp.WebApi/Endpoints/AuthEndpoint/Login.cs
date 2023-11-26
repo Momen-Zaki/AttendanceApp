@@ -70,6 +70,7 @@ namespace AttendanceApp.WebApi.Endpoints.AuthEndpoint
                     expireAt: DateTime.UtcNow.AddDays(1),
                     privileges: u =>
                     {
+                        u.Roles.Add("Employee");
                         u.Claims.Add(
                             new Claim("UserName", user.UserName),
                             new Claim("Role", user.Role),

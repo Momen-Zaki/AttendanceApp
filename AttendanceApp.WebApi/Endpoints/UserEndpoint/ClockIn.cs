@@ -1,8 +1,8 @@
-﻿using FastEndpoints;
-using Microsoft.AspNetCore.Identity;
+﻿using AttendanceApp.WebApi.Entities;
+using AttendanceApp.WebApi.Services;
+using FastEndpoints;
+using Microsoft.AspNetCore.Builder;
 using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,22 +10,53 @@ namespace AttendanceApp.WebApi.Endpoints.UserEndpoint
 {
     public class ClockIn : Endpoint<ClockInRequest, ClockInResponse>
     {
+        private readonly IAttendanceRepository _repository;
+
+        public ClockIn(IAttendanceRepository repository)
+        {
+            _repository = repository;
+        }
+
         public override void Configure()
         {
-            Post("users/{Id:Guid}/clockin");
+            Get("users/{Id:Guid}/clockin");
+            Roles();
+            Description(x => x.WithName("ClockIn"));
         }
 
         public override async Task HandleAsync(ClockInRequest req, CancellationToken ct)
         {
-            var userId = Route<Guid>("Id");
+            var routeId = Route<Guid>("Id");
 
-            // 1- Make Sure He is the same user as the userId he tries to acces
-            // 2- IF there is no AttendanceRecord for today Create one
-            //  with date of today, Set ClockedIn = true and ClockedInAt = now
+            if (routeId.ToString() != req.Id)
+                ThrowError("Unauthorized");
 
-            var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
-            var claims = claimsIdentity.Claims;
-            Response.claims = claims;
+            var user = await _repository.GetUserByIdAsync(routeId);
+            if (user == null)
+                ThrowError("user not found");
+
+            var attendanceForToday =
+                await _repository.GetAttendanceRecordForTodayByUserIDAsync(routeId);
+            if (attendanceForToday == null)
+            {
+                var newAttendance = new Attendance()
+                {
+                    AttendanceDay = DateTime.Now,
+                    ClockedIn = true,
+                    ClockedInAt = DateTime.Now,
+                    ClockedOut = false,
+                    ClockedOutAt = new DateTime()
+                };
+                await _repository.AddAttendanceRecord(newAttendance, routeId);
+            }
+            else
+            {
+                attendanceForToday.ClockedIn = true;
+                attendanceForToday.ClockedInAt = DateTime.Now;
+            }
+
+
+            Response.messege = "have a nice day";
             await SendAsync(Response, cancellation: ct);
         }
     }

@@ -6,9 +6,9 @@
         public const string Employee = "employee";
     }
     
-    public enum Roles
-    {
-        Employee,
-        Admin,
-    }
+    //public enum Roles
+    //{
+    //    Employee,
+    //    Admin,
+    //}
 }

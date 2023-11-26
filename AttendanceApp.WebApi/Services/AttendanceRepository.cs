@@ -46,12 +46,12 @@ namespace AttendanceApp.WebApi.Services
             return await _context.Users.FindAsync(id);
         }
 
-        public async Task<bool> UserExistsWithId(Guid id)
+        public async Task<bool> UserExistsWithIdAsync(Guid id)
         {
             return !(await _context.Users.FirstOrDefaultAsync(u => u.Id == id) == null);
         }
 
-        public async Task<bool> UserExistsWithUserName(string username)
+        public async Task<bool> UserExistsWithUserNameAsync(string username)
         {
             return !(await _context.Users.FirstOrDefaultAsync
                             (u => u.UserName == username) == null);
@@ -68,24 +68,11 @@ namespace AttendanceApp.WebApi.Services
             return (await _context.SaveChangesAsync() >= 0);
         }
 
-        public async Task<User> ReloadUserAsync(User user)
-        {
-            await _context.Entry<User>(user).ReloadAsync();
-            return user;
-        }
-
-        public async Task<Attendance> ReloadAttendanceRecordAsync(Attendance record)
-        {
-            await _context.Entry<Attendance>(record).ReloadAsync();
-            return record;
-        }
-
         // Attendace Record Methods
-        public async Task<IEnumerable<Attendance>> GetAllAttendanceRecordsByUserIdAsync(Guid id)
+        public async Task<IEnumerable<Attendance>> 
+            GetAllAttendanceRecordsByUserIdAsync(Guid id)
         {
-            //var user = _context.Users.FirstOrDefault( u => u.Id == id);
             var user = await this.GetUserByIdAsync(id, true);
-            //return Task.FromResult<IEnumerable<Attendance>>(user.AttendanceRecords.ToList());
             return  user.AttendanceRecords.ToList();
         }
 
@@ -126,6 +113,16 @@ namespace AttendanceApp.WebApi.Services
             await _context.AttenanceRecords.AddAsync(newAttendance);
             await this.SaveChangesAsync();
             return await Task.FromResult(newAttendance);
+        }
+
+        public Task<Attendance> GetAttendanceRecordForTodayByUserIDAsync(Guid id)
+        {
+            var Record = _context.AttenanceRecords
+                            .Where(a => a.UserId == id)
+                            .Where(a => a.AttendanceDay.Date == DateTime.Today)
+                            .FirstOrDefault();
+
+            return Task.FromResult(Record);
         }
     }
 }

@@ -34,9 +34,11 @@ namespace AttendanceApp.WebApi.Endpoints.UserEndpoint
                     Id = e.Id,
                     FullName = e.FullName,
                     UserName = e.UserName,
-                    PasswrodHash = e.PasswrodHash,
+                    Role = e.Role,
+                    //PasswrodHash = e.PasswrodHash,
                 });
             }
+
             Response.Users = users;
             await SendAsync(Response);
             //Response.Users = Map.FromEntityAsync(entities, ct);

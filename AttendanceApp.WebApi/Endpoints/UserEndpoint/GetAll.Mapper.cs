@@ -21,7 +21,7 @@ namespace AttendanceApp.WebApi.Endpoints.UserEndpoint
                     Id = e.Id,
                     FullName = e.FullName,
                     UserName = e.UserName,
-                    PasswrodHash = e.PasswrodHash,
+                    //PasswrodHash = e.PasswrodHash,
                 });
             }
             return Task.FromResult(response);

@@ -1,4 +1,7 @@
-﻿using FastEndpoints;
+﻿using AttendanceApp.WebApi.Entities;
+using AttendanceApp.WebApi.Services;
+using FastEndpoints;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,23 +13,48 @@ namespace AttendanceApp.WebApi.Endpoints.UserEndpoint
 {
     public class ClockOut : Endpoint<ClockOutRequest, ClockOutResponse>
     {
-        public override void Configure()
+        private readonly IAttendanceRepository _repository;
+
+        public ClockOut(IAttendanceRepository repository)
         {
-            Post("users/{Id:Guid}/clockout");
+            _repository = repository;
         }
 
+        public override void Configure()
+        {
+            Get("users/{Id:Guid}/clockout");
+            Roles();
+            Description(x => x.WithName("ClockOut"));
+        }   
+                    
         public override async Task HandleAsync(ClockOutRequest req, CancellationToken ct)
         {
-            var userId = Route<Guid>("Id");
+            var routeId = Route<Guid>("Id");
 
-            // 1- Make Sure He is the same user as the userId he tries to acces
-            // 2- IF there is no AttendanceRecord for today SendError(" ClockIn First")
-            //    IF He has ClockedIn get the AttendanceRecord and Set ClockedOut = true
-            //    and ClockedOutAt = now
+            if (routeId.ToString() != req.Id)
+                ThrowError("Unauthorized");
 
-            var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
-            var claims = claimsIdentity.Claims;
-            Response.claims = claims;
+            var user = await _repository.GetUserByIdAsync(routeId);
+            if (user == null)
+                ThrowError("user not found");
+
+            var attendanceForToday =
+                await _repository.GetAttendanceRecordForTodayByUserIDAsync(routeId);
+
+            if (attendanceForToday == null
+                || (attendanceForToday != null && attendanceForToday.ClockedIn == false))
+            {
+                ThrowError("pleas clock-in first");
+            }
+            else
+            {
+                attendanceForToday.ClockedOut = true;
+                attendanceForToday.ClockedOutAt = DateTime.Now;
+                await _repository.SaveChangesAsync();
+            }
+
+
+            Response.messege = "See u tommorrow";
             await SendAsync(Response, cancellation: ct);
         }
     }

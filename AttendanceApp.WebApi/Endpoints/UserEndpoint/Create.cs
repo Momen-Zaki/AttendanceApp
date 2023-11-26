@@ -32,7 +32,7 @@ namespace AttendanceApp.WebApi.Endpoints.UserEndpoint
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(req.Password);
 
             // NEED More Work
-            if (req.Role != UserRole.Employee || req.Role != UserRole.Admin)
+            if (req.Role != UserRole.Employee && req.Role != UserRole.Admin)
                 AddError(r => r.Role, "Role is not valid");
             //ThrowError("Invalid User Role");
 
