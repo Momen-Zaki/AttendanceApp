@@ -1,5 +1,6 @@
 ﻿using AttendanceApp.WebApi.DbContexts;
 using AttendanceApp.WebApi.Entities;
+using AttendanceApp.WebApi.Models;
 using AttendanceApp.WebApi.Services;
 using FastEndpoints;
 using System.Linq;
@@ -29,6 +30,16 @@ namespace AttendanceApp.WebApi.Endpoints.UserEndpoint
         {
 
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(req.Password);
+
+            // NEED More Work
+            if (req.Role != UserRole.Employee || req.Role != UserRole.Admin)
+                AddError(r => r.Role, "Role is not valid");
+            //ThrowError("Invalid User Role");
+
+            if (await _reposityory.GetUserByUserNameAsync(req.UserName) != null)
+                AddError(r => r.UserName, "Username is taken");
+
+            ThrowIfAnyErrors();
 
             var newUser = new User()
             {
