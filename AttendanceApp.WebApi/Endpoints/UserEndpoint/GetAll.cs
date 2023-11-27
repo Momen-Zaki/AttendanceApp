@@ -1,6 +1,7 @@
 ﻿using AttendanceApp.WebApi.Models;
 using AttendanceApp.WebApi.Services;
 using FastEndpoints;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,15 +22,38 @@ namespace AttendanceApp.WebApi.Endpoints.UserEndpoint
         {
             Get("users");
             Roles("Admin");
+            Summary(s =>
+            {
+                s.Summary = "Get All Users";
+                s.Description = "Get a list of all users";
+                s.ResponseExamples[200] = new GetAllResponse 
+                    { Users = new List<UserWithoutAttendanceDto>()
+                        { new UserWithoutAttendanceDto()
+                            { Id = Guid.NewGuid(),
+                              FullName = string.Empty,
+                              UserName = string.Empty,
+                              Role = UserRole.Employee
+                        },
+                          new UserWithoutAttendanceDto()
+                            { Id = Guid.NewGuid(),
+                              FullName = string.Empty,
+                              UserName = string.Empty,
+                              Role = UserRole.Employee
+                        },
+                    }
+                };
+                s.Responses[200] = "ok with a list of all useres";
+                s.Responses[404] = "Can't delete it for now";
+            });
         }
 
         public override async Task HandleAsync(CancellationToken ct)
         {
             var entities = await _repository.GetAllUsersAsync();
-            var users = new List<UserDto>();
+            var users = new List<UserWithoutAttendanceDto>();
             foreach (var e in entities)
             {
-                users.Add(new UserDto()
+                users.Add(new UserWithoutAttendanceDto()
                 {
                     Id = e.Id,
                     FullName = e.FullName,

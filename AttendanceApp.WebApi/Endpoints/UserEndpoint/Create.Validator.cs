@@ -1,5 +1,4 @@
-﻿using AttendanceApp.WebApi.Models;
-using FastEndpoints;
+﻿using FastEndpoints;
 using FluentValidation;
 
 namespace AttendanceApp.WebApi.Endpoints.UserEndpoint

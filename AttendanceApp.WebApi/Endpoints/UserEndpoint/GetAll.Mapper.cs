@@ -16,7 +16,7 @@ namespace AttendanceApp.WebApi.Endpoints.UserEndpoint
             var response = new GetAllResponse();
             foreach (var e in entities)
             {
-                response.Users.Append(new UserDto()
+                response.Users.Append(new UserWithoutAttendanceDto()
                 {
                     Id = e.Id,
                     FullName = e.FullName,

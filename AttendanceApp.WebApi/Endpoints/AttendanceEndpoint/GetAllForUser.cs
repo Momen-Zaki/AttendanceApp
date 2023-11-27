@@ -1,8 +1,6 @@
-﻿using AttendanceApp.WebApi.Entities;
-using AttendanceApp.WebApi.Models;
+﻿using AttendanceApp.WebApi.Models;
 using AttendanceApp.WebApi.Services;
 using FastEndpoints;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -27,6 +25,11 @@ namespace AttendanceApp.WebApi.Endpoints.AttendanceEndpoint
             {
                 s.Summary = "Get all Attendance Records of a User";
                 s.Description = "Returns a List of  all Attendance Records of a User";
+                s.ResponseExamples[200] = new GetAllForUserResponse()
+                { AttendanceList = new List<AttendanceDto>() };
+                s.Responses[200] = "Returns a List of  all Attendance Records of a User";
+                //s.Responses[401] = "Unauthorized";
+                //s.Responses[403] = "Forbidden";
             });
         }
 

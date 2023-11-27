@@ -1,4 +1,5 @@
-﻿using AttendanceApp.WebApi.Services;
+﻿using AttendanceApp.WebApi.Models;
+using AttendanceApp.WebApi.Services;
 using FastEndpoints;
 using System;
 using System.Threading;
@@ -24,6 +25,12 @@ namespace AttendanceApp.WebApi.Endpoints.AttendanceEndpoint
             {
                 s.Summary = "Create a new Attendance Record for a User";
                 s.Description = "Create a new Attendance Record for a User by his Id";
+                s.ExampleRequest = new CreateForUserRequest { };
+                s.ResponseExamples[200] = new CreateForUserResponse()
+                    {AttendaceRecordCreated = new AttendanceDto(){}};
+                s.Responses[200] = "return the created Attendance Record";
+                //s.Responses[401] = "Unauthorized";
+                //s.Responses[403] = "Forbidden";
             });
         }
 

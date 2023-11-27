@@ -1,5 +1,4 @@
-﻿using AttendanceApp.WebApi.Models;
-using System;
+﻿using System;
 
 namespace AttendanceApp.WebApi.Endpoints.AttendanceEndpoint
 {

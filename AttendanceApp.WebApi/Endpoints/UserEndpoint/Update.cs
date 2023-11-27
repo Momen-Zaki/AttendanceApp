@@ -1,7 +1,6 @@
-﻿using AttendanceApp.WebApi.Services;
+﻿using AttendanceApp.WebApi.Models;
+using AttendanceApp.WebApi.Services;
 using FastEndpoints;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,10 +25,23 @@ namespace AttendanceApp.WebApi.Endpoints.UserEndpoint
                 s.Summary = "Update a User by Id";
                 s.Description = "updates a User with the give id " +
                     "if it exists with the new user object passed";
-                //s.ExampleRequest = new MyRequest { ...};
-                //s.ResponseExamples[200] = new MyResponse { ...};
-                //s.Responses[200] = "ok response description goes here";
-                //s.Responses[404] = "Can't find a user with this Id";
+                s.ExampleRequest = new UpdateRequest {
+                    FullName = string.Empty,
+                    UserName = string.Empty,
+                    Password = string.Empty,
+                    Role = UserRole.Employee
+                };
+                s.ResponseExamples[200] = new UpdateResponse {
+                    User = new UserWithoutAttendanceDto()
+                    {
+                        Id = Guid.NewGuid(),
+                        FullName= string.Empty,
+                        UserName= string.Empty,
+                        Role= UserRole.Employee
+                    }
+                };
+                s.Responses[200] = "ok with the modified user data";
+                s.Responses[404] = "Can't find a user with this Id";
             });
         }
         public override async Task HandleAsync(UpdateRequest req, CancellationToken ct)

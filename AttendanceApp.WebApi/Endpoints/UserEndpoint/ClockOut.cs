@@ -1,11 +1,7 @@
-﻿using AttendanceApp.WebApi.Entities;
-using AttendanceApp.WebApi.Services;
+﻿using AttendanceApp.WebApi.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
 using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,6 +21,15 @@ namespace AttendanceApp.WebApi.Endpoints.UserEndpoint
             Get("users/{Id:Guid}/clockout");
             Roles();
             Description(x => x.WithName("ClockOut"));
+            Summary(s => {
+                s.Summary = "Clock-Out for today attendance";
+                s.Description = "employee can clock-out for today attendance";
+                s.ExampleRequest = new ClockInRequest();
+                s.ResponseExamples[200] = new ClockInResponse()
+                { Messege = string.Empty };
+                s.Responses[200] = "ok, with a messege to see u tomorrow .";
+                s.Responses[403] = "forbidden";
+            });
         }   
                     
         public override async Task HandleAsync(ClockOutRequest req, CancellationToken ct)
@@ -54,7 +59,7 @@ namespace AttendanceApp.WebApi.Endpoints.UserEndpoint
             }
 
 
-            Response.messege = "See u tommorrow";
+            Response.Messege = "See u tomorrow";
             await SendAsync(Response, cancellation: ct);
         }
     }

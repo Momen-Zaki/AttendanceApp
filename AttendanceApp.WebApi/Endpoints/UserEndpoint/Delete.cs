@@ -24,12 +24,11 @@ namespace AttendanceApp.WebApi.Endpoints.UserEndpoint
             Roles("Admin");
             Summary(s =>
             {
-                s.Summary = "Get User by Id";
-                s.Description = "Return a User with the give id if it exists";
-                //s.ExampleRequest = new MyRequest { ...};
-                //s.ResponseExamples[200] = new MyResponse { ...};
-                //s.Responses[200] = "ok response description goes here";
-                //s.Responses[404] = "Can't find a user with this Id";
+                s.Summary = "Delete User by Id";
+                s.Description = "Delete a User with the give id if it exists";
+                s.ResponseExamples[200] = new DeleteResponse { Message = "user deleted!"};
+                s.Responses[200] = "ok with a confirmation message";
+                s.Responses[404] = "Can't delete it for now";
             });
         }
 
@@ -42,7 +41,7 @@ namespace AttendanceApp.WebApi.Endpoints.UserEndpoint
                 ThrowError("user not found");
             }
             await _repository.DeleteUserAsync(user);
-            await SendAsync(new() { message = "user deleted!" }, cancellation: ct);
+            await SendAsync(new() { Message = "user deleted!" }, cancellation: ct);
         }
     }
 }

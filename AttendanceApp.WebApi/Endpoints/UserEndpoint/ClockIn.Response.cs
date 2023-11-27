@@ -2,6 +2,6 @@
 {
     public class ClockInResponse
     {
-        public string messege { get; set; }
+        public string Messege { get; set; }
     }
 }

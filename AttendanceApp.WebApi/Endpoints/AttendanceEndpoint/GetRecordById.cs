@@ -1,16 +1,14 @@
-﻿using AttendanceApp.WebApi.Endpoints.UserEndpoint;
-using AttendanceApp.WebApi.Entities;
-using AttendanceApp.WebApi.Models;
+﻿using AttendanceApp.WebApi.Models;
 using AttendanceApp.WebApi.Services;
 using FastEndpoints;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace AttendanceApp.WebApi.Endpoints.AttendanceEndpoint
 {
-    public class GetRecordById : EndpointWithoutRequest<GetRecordByIdResponse, GetRecordByIdMappeer>
+    public class GetRecordById 
+        : EndpointWithoutRequest<GetRecordByIdResponse, GetRecordByIdMappeer>
     {
         private readonly IAttendanceRepository _repositoy;
 
@@ -27,6 +25,11 @@ namespace AttendanceApp.WebApi.Endpoints.AttendanceEndpoint
             {
                 s.Summary = "Get Attendance Record of a User by Record Id";
                 s.Description = "Returns an Attendance Record of a User by Record Id";
+                s.ResponseExamples[200] = new GetRecordByIdResponse()
+                { Record = new AttendanceDto() };
+                s.Responses[200] = "Returns aa Attendance Record";
+                //s.Responses[401] = "Unauthorized";
+                //s.Responses[403] = "Forbidden";
             });
         }
 

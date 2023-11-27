@@ -3,6 +3,7 @@ using AttendanceApp.WebApi.Entities;
 using AttendanceApp.WebApi.Models;
 using AttendanceApp.WebApi.Services;
 using FastEndpoints;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,6 +25,26 @@ namespace AttendanceApp.WebApi.Endpoints.UserEndpoint
         {
             Post("/users/create");
             Roles("Admin");
+            Summary(s => {
+                s.Summary = "Create a new user";
+                s.Description = "creates a new user";
+                s.ExampleRequest = new CreateRequest()
+                    { FullName = string.Empty,
+                      UserName = string.Empty,
+                      Password = string.Empty,
+                      Role = UserRole.Employee
+                    };
+                s.ResponseExamples[200] = new CreateResponse()
+                    { User = new UserWithoutAttendanceDto() 
+                        { Id = Guid.NewGuid(),
+                          FullName = string.Empty,
+                          UserName = string.Empty,
+                          Role = UserRole.Employee
+                    }};
+                s.Responses[200] = "returns the created user";
+                s.Responses[401] = "Unauthorized";
+                s.Responses[403] = "forbidden";
+            });
         }
 
         public override async Task HandleAsync(CreateRequest req, CancellationToken ct)

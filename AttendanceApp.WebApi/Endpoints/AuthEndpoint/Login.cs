@@ -1,10 +1,10 @@
-﻿using AttendanceApp.WebApi.Models;
+﻿using AttendanceApp.WebApi.Entities;
+using AttendanceApp.WebApi.Models;
 using AttendanceApp.WebApi.Services;
 using FastEndpoints;
 using FastEndpoints.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Security.Claims;
 using System.Threading;
@@ -32,17 +32,27 @@ namespace AttendanceApp.WebApi.Endpoints.AuthEndpoint
             {
                 s.Summary = "Login";
                 s.Description = "Return a Token for the give username and password";
-                //s.ExampleRequest = new MyRequest { ...};
-                //s.ResponseExamples[200] = new MyResponse { ...};
-                //s.Responses[200] = "ok response description goes here";
-                //s.Responses[404] = "Can't find a user with this Id";
+                s.ExampleRequest = new LoginRequest() 
+                    { Username = string.Empty, Password = string.Empty};
+                s.ResponseExamples[200] = new LoginResponse()
+                    { UserName = string.Empty, Token = string.Empty };
+                s.Responses[200] = "returns a Useraname and the Auth Token";
             });
         }
 
         public override async Task HandleAsync(LoginRequest req, CancellationToken ct)
         {
-            var user = await _repository.GetUserByUserNameAsync(req.Username);
-            bool passwordMatches = BCrypt.Net.BCrypt.Verify(req.Password, user.PasswrodHash);
+            var user = new User();
+            bool passwordMatches = false;
+            try
+            {
+                user = await _repository.GetUserByUserNameAsync(req.Username);
+                passwordMatches = BCrypt.Net.BCrypt.Verify(req.Password, user.PasswrodHash);
+            }
+            catch (Exception)
+            {
+                ThrowError("user not found");
+            }
 
             if (user == null || !passwordMatches)
                 ThrowError("The supplied credentials are invalid!");

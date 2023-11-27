@@ -1,7 +1,6 @@
 ﻿using AttendanceApp.WebApi.Entities;
 using AttendanceApp.WebApi.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace AttendanceApp.WebApi.DbContexts
 {

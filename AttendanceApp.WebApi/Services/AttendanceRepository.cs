@@ -1,7 +1,6 @@
 ﻿using AttendanceApp.WebApi.DbContexts;
 using AttendanceApp.WebApi.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;

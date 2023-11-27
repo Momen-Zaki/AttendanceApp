@@ -22,6 +22,15 @@ namespace AttendanceApp.WebApi.Endpoints.UserEndpoint
             Get("users/{Id:Guid}/clockin");
             Roles();
             Description(x => x.WithName("ClockIn"));
+            Summary(s => {
+                s.Summary = "Clock-in for today attendance";
+                s.Description = "employee can clock-in for today attendance";
+                s.ExampleRequest = new ClockInRequest();
+                s.ResponseExamples[200] = new ClockInResponse() 
+                    { Messege = string.Empty };
+                s.Responses[200] = "ok, with a messege to wish u a good day.";
+                s.Responses[403] = "forbidden";
+            });
         }
 
         public override async Task HandleAsync(ClockInRequest req, CancellationToken ct)
@@ -56,7 +65,7 @@ namespace AttendanceApp.WebApi.Endpoints.UserEndpoint
             }
 
 
-            Response.messege = "have a nice day";
+            Response.Messege = "have a nice day";
             await SendAsync(Response, cancellation: ct);
         }
     }

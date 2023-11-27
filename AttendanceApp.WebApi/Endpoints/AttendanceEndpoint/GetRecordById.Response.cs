@@ -1,6 +1,4 @@
-﻿using AttendanceApp.WebApi.Entities;
-using AttendanceApp.WebApi.Models;
-using System.Collections.Generic;
+﻿using AttendanceApp.WebApi.Models;
 
 namespace AttendanceApp.WebApi.Endpoints.AttendanceEndpoint
 {
